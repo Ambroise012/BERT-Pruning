@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#SBATCH --job-name=instal        # Job name
+#SBATCH --output=job.%j.out      # Name of output file (%j expands to jobId)
+#SBATCH --cpus-per-task=8       # Schedule one core
+#SBATCH --gres=gpu:2               # Schedule a GPU
+#SBATCH --time=2-00:00:00        #time
+#SBATCH --partition=red         #red, brown
+#SBATCH --mail-type=END          # Send an email when the job finishes
+
+SPARSITY=(0.6 0.7 0.8 0.9 0.95)
+for target_sparsity in "${SPARSITY[@]}"; do
+    ex_name=${target_sparsity}
+    ex_cate=train
+    output_dir=output_models/SQuAD/${ex_cate}/3_epoch/${ex_name}
+    mkdir -p ${output_dir}
+    (python run_squad.py \
+        --model_type bert \
+        --model_name_or_path bert-base-uncased \
+        --do_eval \
+        --do_train \
+        --do_lower_case \
+        --train_file squad/train-v1.1.json \
+        --predict_file squad/dev-v1.1.json \
+        --learning_rate 3e-5 \
+        --num_train_epochs 3 \
+        --max_seq_length 384 \
+        --doc_stride 128 \
+        --output_dir ${output_dir} \
+        --per_gpu_eval_batch_size=3 \
+        --per_gpu_train_batch_size=3 \
+        --lagrangian_warmup_epochs 2 \
+        --reg_learning_rate 0.1 \
+        --pruning_type "structured_heads+structured_mlp+hidden+layer" \
+        --prepruning_finetune_epochs 1 \
+        --scheduler_type "linear" \
+        --overwrite_output_dir \
+        --target_sparsity ${target_sparsity} \
+        --model_revision "main" \
+        --use_auth_token False 2>&1 | tee ${output_dir}/log.txt
+    )
+done
+
+
+
