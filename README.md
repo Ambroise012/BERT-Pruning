@@ -5,7 +5,7 @@ This repository contains the code for the report about Structure pruning on BERT
 ## Environment
 
 ```
-conda env create -f prune_llm.yml
+conda env create -n prune_llm
 conda activate prune_llm
 cd BERT-Pruning
 ```
