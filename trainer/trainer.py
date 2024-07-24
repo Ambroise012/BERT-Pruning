@@ -592,7 +592,7 @@ class CoFiTrainer(Trainer):
                     specified_teacher_layers[0] = max(2, specified_teacher_layers[0])
          # version that we are using in this code
                 else:
-                    specified_teacher_layers = [2, 5, 8, 11]
+                    specified_teacher_layers = [1, 3, 5, 7, 9, 11]
                 # logger.info(f"sampled teacher layers: {specified_teacher_layers}")
                 transformed_s_layer_o = [self.model.layer_transformation(
                     s_layer_o) for s_layer_o in student_layer_output]

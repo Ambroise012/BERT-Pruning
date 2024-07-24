@@ -11,7 +11,6 @@
 glue_low=(MRPC RTE STSB CoLA)
 glue_high=(MNLI QQP QNLI SST2)
 
-proj_dir=.
 
 code_dir=${proj_dir}
 
@@ -19,7 +18,7 @@ code_dir=${proj_dir}
 task_name=MNLI
 
 # pretrain model
-model_name_or_path=bert-base-uncased
+model_name_or_path=google-bert/bert-base-uncased
 
 # logging & saving
 logging_steps=100
@@ -61,7 +60,7 @@ if [[ " ${glue_high[*]} " =~ ${task_name} ]]; then
     lagrangian_warmup_epochs=2
 fi
 
-pretrained_pruned_model=output_models/MRPC/no_distill/0.8
+pretrained_pruned_model=None
 
 target_sparsity=0.8
 ex_name=${target_sparsity}

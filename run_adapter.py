@@ -22,6 +22,8 @@ from trainer.trainer_adapter import CoFiTrainer
 from utils.utils import *
 from models.model_args import ModelArguments
 
+from codecarbon import EmissionsTracker
+
 import csv
 
 import wandb
@@ -88,8 +90,8 @@ def main():
     set_seed(training_args.seed)
     
     ################  BEGIN EMISSIONS  ###############
-    # tracker = EmissionsTracker()
-    # tracker.start()
+    tracker = EmissionsTracker(project_name="paper")
+    tracker.start()
     ##################################################
 
     # print all arguments
@@ -382,7 +384,9 @@ def main():
         model = load_model(model_save, model_class, zs)
 
     model = model.cuda()
-    model = model.eval()
+    
+    # end of emissions
+    tracker.stop()
 
     model.config.output_hidden_states = False
     model.config.output_attentions = False             

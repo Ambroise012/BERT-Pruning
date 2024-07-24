@@ -121,13 +121,14 @@ def evaluate(model):
     
     
 
-
-    metrics = compute_metrics(EvalPrediction(
-        predictions=final_preds, label_ids=final_label_ids))
     total_infer_time = round(total_infer_times / (t-1), 4)
-    metrics["seconds/example"] = total_infer_times / (t-1) / total_examples
+    metrics["speedup"] = total_infer_times / (t-1) / total_examples
+
     emissions=emissions*10.0**(6.0)
     metrics["emissions"] = emissions
+
+    metrics = compute_metrics(EvalPrediction(predictions=final_preds, label_ids=final_label_ids))
+
     return metrics
 
 
@@ -175,9 +176,34 @@ def prepare_validation_features(examples):
     return tokenized_examples
 
 def save_metric_to_csv(metrics, task_name, model_size, sparsity):
-    file_name = "eval_metrics_adapter.csv"
-    file_exists = os.path.isfile(file_name)
-    
+    if task_name == "mrpc":
+        file_name = "csv/eval_metrics_MRPC.csv"
+        file_exists = os.path.isfile(file_name)
+    elif task_name == "rte":
+        file_name = "csv/eval_metrics_RTE.csv"
+        file_exists = os.path.isfile(file_name)   
+    elif task_name == "stsb":
+        file_name = "csv/eval_metrics_STSB.csv"
+        file_exists = os.path.isfile(file_name)
+    elif task_name == "cola":
+        file_name = "csv/eval_metrics_CoLA.csv"
+        file_exists = os.path.isfile(file_name)
+    elif task_name == "mnli":
+        file_name = "csv/eval_metrics_MNLI.csv"
+        file_exists = os.path.isfile(file_name)
+    elif task_name == "qqp":
+        file_name = "csv/eval_metrics_QQP.csv"
+        file_exists = os.path.isfile(file_name)
+    elif task_name == "qnli":
+        file_name = "csv/eval_metrics_QNLI.csv"
+        file_exists = os.path.isfile(file_name)
+    elif task_name == "sst2":
+        file_name = "csv/eval_metrics_SST2.csv"
+        file_exists = os.path.isfile(file_name)
+    else : 
+        file_name = "eval_metrics.csv"
+        file_exists = os.path.isfile(file_name)
+
     with open(file_name, mode='a', newline='') as file:
         writer = csv.writer(file)
         # Write the headers if the file does not exist
@@ -203,7 +229,7 @@ def glue_preprocess_function(examples):
 
     result = tokenizer(*args, padding=padding,
                        max_length=max_seq_length, truncation=True)
-    if task_name == "mnli" and model_name_or_path.startswith("princeton-nlp/"):
+    if task_name == "mnli":
         # legacy issue of using GLUEDataset
         label_to_id = {1:2, 0:1, 2:0}
         labels = [label_to_id[i] for i in examples["label"]]
