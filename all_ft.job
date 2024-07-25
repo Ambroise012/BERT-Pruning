@@ -1,0 +1,89 @@
+#!/bin/bash
+
+#SBATCH --job-name=instal        # Job name
+#SBATCH --output=job.%j.out      # Name of output file (%j expands to jobId)
+#SBATCH --cpus-per-task=24        # Schedule one core
+#SBATCH --gres=gpu:1             # Schedule a GPU
+#SBATCH --time=3-00:00:00        #time
+#SBATCH --partition=red          #red, brown
+#SBATCH --mail-type=END          # Send an email when the job finishes
+
+glue_low=(MRPC RTE STSB CoLA)
+glue_high=(MNLI QQP QNLI SST2)
+
+
+# pretrain model
+model_name_or_path=google-bert/bert-base-cased
+
+# logging & saving
+logging_steps=100
+save_steps=0
+
+# train parameters
+max_seq_length=128
+batch_size=32 
+learning_rate=2e-5
+reg_learning_rate=0.01
+epochs=20 
+
+# seed
+seed=57
+
+# pruning
+pruning_type=None
+
+layer_distill_version=4
+sparsity_epsilon=0.01
+
+scheduler_type=linear
+
+pretrained_pruned_model=None
+
+TASK=(MRPC RTE STSB CoLA MNLI QQP QNLI SST2)
+for task in "${TASK[@]}"; do
+    # task and data
+    task_name=${task}
+    if [[ " ${glue_low[*]} " =~ ${task_name} ]]; then
+        eval_steps=50
+        epochs=100
+        start_saving_best_epochs=50
+        #prepruning_finetune_epochs=4
+        lagrangian_warmup_epochs=20
+    fi
+
+    if [[ " ${glue_high[*]} " =~ ${task_name} ]]; then
+        eval_steps=500
+        epochs=20
+        #prepruning_finetune_epochs=1
+        lagrangian_warmup_epochs=2
+    fi
+
+    ex_cate=FT
+    output_dir=output_models/bert-base-cased/${ex_cate}/${task_name}
+    mkdir -p ${output_dir}
+    (python3 run_glue_prune.py \
+        --output_dir ${output_dir} \
+        --logging_steps ${logging_steps} \
+        --task_name ${task_name} \
+        --model_name_or_path ${model_name_or_path} \
+        --ex_cate ${ex_cate} \
+        --do_train \
+        --do_eval \
+        --max_seq_length ${max_seq_length} \
+        --per_device_train_batch_size ${batch_size} \
+        --per_device_eval_batch_size 32 \
+        --learning_rate ${learning_rate} \
+        --reg_learning_rate ${reg_learning_rate} \
+        --num_train_epochs ${epochs} \
+        --overwrite_output_dir \
+        --save_steps ${save_steps} \
+        --eval_steps ${eval_steps} \
+        --evaluation_strategy steps \
+        --seed ${seed} \
+        --pruning_type ${pruning_type} \
+        --pretrained_pruned_model ${pretrained_pruned_model} \
+        --freeze_embeddings \
+        --scheduler_type $scheduler_type \
+        --lagrangian_warmup_epochs $lagrangian_warmup_epochs 2>&1 | tee ${output_dir}/log.txt
+        )
+done

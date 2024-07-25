@@ -1,0 +1,793 @@
+Using the `WAND_DISABLED` environment variable is deprecated and will be removed in v5. Use the --report_to flag to control the integrations used for logging result (for instance --report_to none).
+07/24/2024 13:03:22 - WARNING - __main__ - Process rank: -1, device: cuda:0, n_gpu: 1distributed training: False, 16-bits training: False
+07/24/2024 13:03:22 - INFO - __main__ - Training/evaluation parameters TrainingArguments(
+_n_gpu=1,
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+bf16=False,
+bf16_full_eval=False,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_pin_memory=True,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+debug=[],
+deepspeed=None,
+disable_tqdm=False,
+do_eval=True,
+do_predict=False,
+do_train=True,
+eval_accumulation_steps=None,
+eval_steps=50,
+evaluation_strategy=IntervalStrategy.STEPS,
+fp16=False,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+gradient_accumulation_steps=1,
+gradient_checkpointing=False,
+greater_is_better=None,
+group_by_length=False,
+half_precision_backend=auto,
+hub_model_id=None,
+hub_strategy=HubStrategy.EVERY_SAVE,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=2e-05,
+length_column_name=length,
+load_best_model_at_end=False,
+local_rank=-1,
+log_level=-1,
+log_level_replica=-1,
+log_on_each_node=True,
+logging_dir=output_models/bert-base-cased/A/MRPC/runs/Jul24_13-03-21_cn3,
+logging_first_step=False,
+logging_nan_inf_filter=True,
+logging_steps=100,
+logging_strategy=IntervalStrategy.STEPS,
+lr_scheduler_type=SchedulerType.LINEAR,
+max_grad_norm=1.0,
+max_steps=-1,
+metric_for_best_model=None,
+mp_parameters=,
+no_cuda=False,
+num_train_epochs=100.0,
+optim=OptimizerNames.ADAMW_HF,
+output_dir=output_models/bert-base-cased/A/MRPC,
+overwrite_output_dir=True,
+past_index=-1,
+per_device_eval_batch_size=32,
+per_device_train_batch_size=32,
+prediction_loss_only=False,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+remove_unused_columns=True,
+report_to=['mlflow', 'codecarbon'],
+resume_from_checkpoint=None,
+run_name=output_models/bert-base-cased/A/MRPC,
+save_on_each_node=False,
+save_steps=0,
+save_strategy=IntervalStrategy.STEPS,
+save_total_limit=None,
+seed=57,
+sharded_ddp=[],
+skip_memory_metrics=True,
+tf32=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+use_legacy_prediction_loop=False,
+warmup_ratio=0.0,
+warmup_steps=0,
+weight_decay=0.0,
+xpu_backend=None,
+)
+[codecarbon WARNING @ 13:03:23] Invalid gpu_ids format. Expected a string or a list of ints.
+[codecarbon INFO @ 13:03:23] [setup] RAM Tracking...
+[codecarbon WARNING @ 13:03:24] Could not find mem= after running `scontrol show job $SLURM_JOB_ID` to count SLURM-available RAM. Using the machine's total RAM.
+[codecarbon INFO @ 13:03:24] [setup] GPU Tracking...
+[codecarbon INFO @ 13:03:24] Tracking Nvidia GPU via pynvml
+[codecarbon INFO @ 13:03:24] [setup] CPU Tracking...
+[codecarbon INFO @ 13:03:24] Tracking Intel CPU via RAPL interface
+[codecarbon INFO @ 13:03:24] >>> Tracker's metadata:
+[codecarbon INFO @ 13:03:24]   Platform system: Linux-3.10.0-1062.18.1.el7.x86_64-x86_64-with-glibc2.17
+[codecarbon INFO @ 13:03:24]   Python version: 3.9.19
+[codecarbon INFO @ 13:03:24]   CodeCarbon version: 2.4.2
+[codecarbon INFO @ 13:03:24]   Available RAM : 187.411 GB
+[codecarbon INFO @ 13:03:24]   CPU count: 24
+[codecarbon INFO @ 13:03:24]   CPU model: Intel(R) Xeon(R) Gold 6136 CPU @ 3.00GHz
+[codecarbon INFO @ 13:03:24]   GPU count: 1
+[codecarbon INFO @ 13:03:24]   GPU model: 1 x Tesla V100-PCIE-32GB
+/home/ambla/.conda/envs/prune_llm/lib/python3.9/site-packages/datasets/load.py:923: FutureWarning: The repository for glue contains custom code which must be executed to correctly load the dataset. You can inspect the repository content at ./glue.py
+You can avoid this message in future by passing the argument `trust_remote_code=True`.
+Passing `trust_remote_code=True` will be mandatory to load this dataset from the next major release of `datasets`.
+  warnings.warn(
+Loading Dataset Infos from /home/ambla/.cache/huggingface/modules/datasets_modules/datasets/glue/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353
+07/24/2024 13:03:28 - INFO - datasets.info - Loading Dataset Infos from /home/ambla/.cache/huggingface/modules/datasets_modules/datasets/glue/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353
+Repo card metadata block was not found. Setting CardData to empty.
+07/24/2024 13:03:28 - WARNING - huggingface_hub.repocard - Repo card metadata block was not found. Setting CardData to empty.
+Overwrite dataset info from restored data version if exists.
+07/24/2024 13:03:28 - INFO - datasets.builder - Overwrite dataset info from restored data version if exists.
+Loading Dataset info from /home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353
+07/24/2024 13:03:28 - INFO - datasets.info - Loading Dataset info from /home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353
+Found cached dataset glue (/home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353)
+07/24/2024 13:03:28 - INFO - datasets.builder - Found cached dataset glue (/home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353)
+Loading Dataset info from /home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353
+07/24/2024 13:03:28 - INFO - datasets.info - Loading Dataset info from /home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353
+[INFO|configuration_utils.py:648] 2024-07-24 13:03:28,843 >> loading configuration file https://huggingface.co/google-bert/bert-base-cased/resolve/main/config.json from cache at /home/ambla/.cache/huggingface/transformers/ef212c6963606d314c010d64a0e8690f3945766d067da4b2e89a750e2ef8f411.a64a22196690e0e82ead56f388a3ef3a50de93335926ccfa20610217db589307
+[INFO|configuration_utils.py:684] 2024-07-24 13:03:28,845 >> Model config BertConfig {
+  "_name_or_path": "google-bert/bert-base-cased",
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "classifier_dropout": null,
+  "finetuning_task": "mrpc",
+  "gradient_checkpointing": false,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "transformers_version": "4.17.0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 28996
+}
+
+[INFO|configuration_utils.py:648] 2024-07-24 13:03:29,425 >> loading configuration file https://huggingface.co/google-bert/bert-base-cased/resolve/main/config.json from cache at /home/ambla/.cache/huggingface/transformers/ef212c6963606d314c010d64a0e8690f3945766d067da4b2e89a750e2ef8f411.a64a22196690e0e82ead56f388a3ef3a50de93335926ccfa20610217db589307
+[INFO|configuration_utils.py:684] 2024-07-24 13:03:29,426 >> Model config BertConfig {
+  "_name_or_path": "google-bert/bert-base-cased",
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "classifier_dropout": null,
+  "gradient_checkpointing": false,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "transformers_version": "4.17.0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 28996
+}
+
+[INFO|tokenization_utils_base.py:1786] 2024-07-24 13:03:31,522 >> loading file https://huggingface.co/google-bert/bert-base-cased/resolve/main/vocab.txt from cache at /home/ambla/.cache/huggingface/transformers/197e4812647814be52e513e4811095b6969fe8ddb824587879671b42e23cbc44.437aa611e89f6fc6675a049d2b5545390adbc617e7d655286421c191d2be2791
+[INFO|tokenization_utils_base.py:1786] 2024-07-24 13:03:31,523 >> loading file https://huggingface.co/google-bert/bert-base-cased/resolve/main/tokenizer.json from cache at /home/ambla/.cache/huggingface/transformers/54d20dab98a26ff77a643122db055910b9c33cb901e34b2f0b0578372658f945.3dab63143af66769bbb35e3811f75f7e16b2320e12b7935e216bd6159ce6d9a6
+[INFO|tokenization_utils_base.py:1786] 2024-07-24 13:03:31,523 >> loading file https://huggingface.co/google-bert/bert-base-cased/resolve/main/added_tokens.json from cache at None
+[INFO|tokenization_utils_base.py:1786] 2024-07-24 13:03:31,523 >> loading file https://huggingface.co/google-bert/bert-base-cased/resolve/main/special_tokens_map.json from cache at None
+[INFO|tokenization_utils_base.py:1786] 2024-07-24 13:03:31,523 >> loading file https://huggingface.co/google-bert/bert-base-cased/resolve/main/tokenizer_config.json from cache at /home/ambla/.cache/huggingface/transformers/d2a3577cbea2ddcc691017e03857a5adcbf81c5b3c6fecd35657fd928f99969b.25d8d06fb0679146a3ed2a3463e3585380bff882fe6e1ebc497196e40dbbd7fa
+[INFO|configuration_utils.py:648] 2024-07-24 13:03:31,894 >> loading configuration file https://huggingface.co/google-bert/bert-base-cased/resolve/main/config.json from cache at /home/ambla/.cache/huggingface/transformers/ef212c6963606d314c010d64a0e8690f3945766d067da4b2e89a750e2ef8f411.a64a22196690e0e82ead56f388a3ef3a50de93335926ccfa20610217db589307
+[INFO|configuration_utils.py:684] 2024-07-24 13:03:31,897 >> Model config BertConfig {
+  "_name_or_path": "google-bert/bert-base-cased",
+  "architectures": [
+    "BertForMaskedLM"
+  ],
+  "attention_probs_dropout_prob": 0.1,
+  "classifier_dropout": null,
+  "gradient_checkpointing": false,
+  "hidden_act": "gelu",
+  "hidden_dropout_prob": 0.1,
+  "hidden_size": 768,
+  "initializer_range": 0.02,
+  "intermediate_size": 3072,
+  "layer_norm_eps": 1e-12,
+  "max_position_embeddings": 512,
+  "model_type": "bert",
+  "num_attention_heads": 12,
+  "num_hidden_layers": 12,
+  "pad_token_id": 0,
+  "position_embedding_type": "absolute",
+  "transformers_version": "4.17.0",
+  "type_vocab_size": 2,
+  "use_cache": true,
+  "vocab_size": 28996
+}
+
+Layer 0, heads  pruned.
+Layer 1, heads  pruned.
+Layer 2, heads  pruned.
+Layer 3, heads  pruned.
+Layer 4, heads  pruned.
+Layer 5, heads  pruned.
+Layer 6, heads  pruned.
+Layer 7, heads  pruned.
+Layer 8, heads  pruned.
+Layer 9, heads  pruned.
+Layer 10, heads  pruned.
+Layer 11, heads  pruned.
+Layer: 0
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+Layer: 1
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+Layer: 2
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+Layer: 3
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+Layer: 4
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+Layer: 5
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+Layer: 6
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+Layer: 7
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+Layer: 8
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+Layer: 9
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+Layer: 10
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+Layer: 11
+query: torch.Size([768, 768])
+key: torch.Size([768, 768])
+value: torch.Size([768, 768])
+output: torch.Size([768, 768])
+up: torch.Size([3072, 768])
+down: torch.Size([768, 3072])
+07/24/2024 13:03:39 - INFO - __main__ - CoFiBertForSequenceClassification(
+  (bert): CoFiBertModel(
+    (embeddings): CoFiBertEmbeddings(
+      (word_embeddings): Embedding(28996, 768, padding_idx=0)
+      (position_embeddings): Embedding(512, 768)
+      (token_type_embeddings): Embedding(2, 768)
+      (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+      (dropout): Dropout(p=0.1, inplace=False)
+    )
+    (encoder): CoFiBertEncoder(
+      (layer): ModuleList(
+        (0): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+        (1): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+        (2): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+        (3): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+        (4): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+        (5): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+        (6): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+        (7): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+        (8): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+        (9): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+        (10): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+        (11): CoFiBertLayer(
+          (attention): CoFiBertAttention(
+            (self): CoFiBertSelfAttention(
+              (query): Linear(in_features=768, out_features=768, bias=True)
+              (key): Linear(in_features=768, out_features=768, bias=True)
+              (value): Linear(in_features=768, out_features=768, bias=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+            )
+            (output): CoFiBertSelfOutput(
+              (dense): Linear(in_features=768, out_features=768, bias=True)
+              (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+              (dropout): Dropout(p=0.1, inplace=False)
+              (adapter): AdapterModule(
+                (proj_down): Linear(in_features=768, out_features=64, bias=True)
+                (proj_up): Linear(in_features=64, out_features=768, bias=True)
+              )
+            )
+          )
+          (intermediate): BertIntermediate(
+            (dense): Linear(in_features=768, out_features=3072, bias=True)
+            (intermediate_act_fn): GELUActivation()
+          )
+          (output): CoFiBertOutput(
+            (dense): Linear(in_features=3072, out_features=768, bias=True)
+            (LayerNorm): CoFiLayerNorm((768,), eps=1e-12, elementwise_affine=True)
+            (dropout): Dropout(p=0.1, inplace=False)
+            (adapter): AdapterModule(
+              (proj_down): Linear(in_features=768, out_features=64, bias=True)
+              (proj_up): Linear(in_features=64, out_features=768, bias=True)
+            )
+          )
+        )
+      )
+    )
+    (pooler): BertPooler(
+      (dense): Linear(in_features=768, out_features=768, bias=True)
+      (activation): Tanh()
+    )
+  )
+  (dropout): Dropout(p=0.1, inplace=False)
+  (classifier): Linear(in_features=768, out_features=2, bias=True)
+)
+07/24/2024 13:03:39 - INFO - __main__ - Model size: 87433728
+Loading cached processed dataset at /home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353/cache-92915d3f72425b97.arrow
+07/24/2024 13:03:39 - INFO - datasets.arrow_dataset - Loading cached processed dataset at /home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353/cache-92915d3f72425b97.arrow
+Loading cached processed dataset at /home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353/cache-3232dcba93f1fd4b.arrow
+07/24/2024 13:03:39 - INFO - datasets.arrow_dataset - Loading cached processed dataset at /home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353/cache-3232dcba93f1fd4b.arrow
+Loading cached processed dataset at /home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353/cache-6619125be811cb95.arrow
+07/24/2024 13:03:39 - INFO - datasets.arrow_dataset - Loading cached processed dataset at /home/ambla/.cache/huggingface/datasets/glue/mrpc/1.0.0/a420f5e518f42454003587c47467370329f9fc0c6508d1ae0c45b58ea266a353/cache-6619125be811cb95.arrow
+07/24/2024 13:03:39 - INFO - __main__ - Sample 174 of the training set: {'sentence1': '" I just got carried away and started making stuff , " Byrne said .', 'sentence2': 'Byrne says he got carried away with PowerPoint and just " started making stuff . "', 'label': 1, 'idx': 196, 'input_ids': [101, 107, 146, 1198, 1400, 2446, 1283, 1105, 1408, 1543, 4333, 117, 107, 15635, 1163, 119, 102, 15635, 1867, 1119, 1400, 2446, 1283, 1114, 3794, 2101, 21506, 1105, 1198, 107, 1408, 1543, 4333, 119, 107, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+07/24/2024 13:03:39 - INFO - __main__ - Sample 1506 of the training set: {'sentence1': "Goldman is trying to sell the shares to institutional investors at $ US13.15 each , said the traders , who received calls from the securities firm 's sales force .", 'sentence2': "Goldman offered the shares for sale to institutional investors at $ 13.15 each , said the traders , who received calls from the securities firm 's sales force .", 'label': 1, 'idx': 1677, 'input_ids': [101, 19085, 1110, 1774, 1106, 4582, 1103, 6117, 1106, 15040, 9660, 1120, 109, 1646, 17668, 119, 1405, 1296, 117, 1163, 1103, 14552, 117, 1150, 1460, 3675, 1121, 1103, 19313, 3016, 112, 188, 3813, 2049, 119, 102, 19085, 2356, 1103, 6117, 1111, 4688, 1106, 15040, 9660, 1120, 109, 1492, 119, 1405, 1296, 117, 1163, 1103, 14552, 117, 1150, 1460, 3675, 1121, 1103, 19313, 3016, 112, 188, 3813, 2049, 119, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+07/24/2024 13:03:39 - INFO - __main__ - Sample 2415 of the training set: {'sentence1': 'Significantly , it made no mention of the role of terrorist organisation Jemah Islamiyah , accused of being behind the attacks .', 'sentence2': 'The address made no mention of the role of terrorist organisation Jemaah Islamiyah , which was behind the attacks .', 'label': 1, 'idx': 2685, 'input_ids': [101, 20979, 18772, 1193, 117, 1122, 1189, 1185, 4734, 1104, 1103, 1648, 1104, 9640, 5632, 27901, 26363, 6489, 9384, 1324, 117, 4806, 1104, 1217, 1481, 1103, 3690, 119, 102, 1109, 4134, 1189, 1185, 4734, 1104, 1103, 1648, 1104, 9640, 5632, 27901, 1918, 3354, 6489, 9384, 1324, 117, 1134, 1108, 1481, 1103, 3690, 119, 102, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'token_type_ids': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}.
+/home/ambla/BERT-Pruning/run_adapter.py:318: FutureWarning: load_metric is deprecated and will be removed in the next major version of datasets. Use 'evaluate.load' instead, from the new library 🤗 Evaluate: https://huggingface.co/docs/evaluate
+  metric = load_metric("glue", data_args.task_name)
+/home/ambla/.conda/envs/prune_llm/lib/python3.9/site-packages/datasets/load.py:753: FutureWarning: The repository for glue contains custom code which must be executed to correctly load the metric. You can inspect the repository content at https://raw.githubusercontent.com/huggingface/datasets/2.17.0/metrics/glue/glue.py
+You can avoid this message in future by passing the argument `trust_remote_code=True`.
+Passing `trust_remote_code=True` will be mandatory to load this metric from the next major release of `datasets`.
+  warnings.warn(
+07/24/2024 13:03:40 - INFO - __main__ - ************* 3668 Training Examples Loaded *************
+07/24/2024 13:03:40 - INFO - __main__ - ************* 408 Evaluation Examples Loaded *************
+[codecarbon INFO @ 13:03:43] Energy consumed for RAM : 0.000293 kWh. RAM Power : 70.27894020080566 W
+[codecarbon INFO @ 13:03:43] Energy consumed for all GPUs : 0.000135 kWh. Total GPU Power : 32.308610892166 W
+[codecarbon INFO @ 13:03:43] Energy consumed for all CPUs : 0.000466 kWh. Total CPU Power : 111.82022721868698 W
+[codecarbon INFO @ 13:03:43] 0.000894 kWh of electricity used since the beginning.
+[codecarbon WARNING @ 13:03:44] Invalid gpu_ids format. Expected a string or a list of ints.
+[codecarbon INFO @ 13:03:44] [setup] RAM Tracking...
+[codecarbon WARNING @ 13:03:44] Could not find mem= after running `scontrol show job $SLURM_JOB_ID` to count SLURM-available RAM. Using the machine's total RAM.
+[codecarbon INFO @ 13:03:44] [setup] GPU Tracking...
+[codecarbon INFO @ 13:03:44] Tracking Nvidia GPU via pynvml
+[codecarbon INFO @ 13:03:44] [setup] CPU Tracking...
+[codecarbon INFO @ 13:03:44] Tracking Intel CPU via RAPL interface
+[codecarbon INFO @ 13:03:44] >>> Tracker's metadata:
+[codecarbon INFO @ 13:03:44]   Platform system: Linux-3.10.0-1062.18.1.el7.x86_64-x86_64-with-glibc2.17
+[codecarbon INFO @ 13:03:44]   Python version: 3.9.19
+[codecarbon INFO @ 13:03:44]   CodeCarbon version: 2.4.2
+[codecarbon INFO @ 13:03:44]   Available RAM : 187.411 GB
+[codecarbon INFO @ 13:03:44]   CPU count: 24
+[codecarbon INFO @ 13:03:44]   CPU model: Intel(R) Xeon(R) Gold 6136 CPU @ 3.00GHz
+[codecarbon INFO @ 13:03:44]   GPU count: 1
+[codecarbon INFO @ 13:03:44]   GPU model: 1 x Tesla V100-PCIE-32GB
+[INFO|trainer.py:570] 2024-07-24 13:03:47,738 >> The following columns in the training set  don't have a corresponding argument in `CoFiBertForSequenceClassification.forward` and have been ignored: sentence2, idx, sentence1. If sentence2, idx, sentence1 are not expected by `CoFiBertForSequenceClassification.forward`,  you can safely ignore this message.
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter - main params, number of params: 87885312, weight_decay: 0.0, lr: 2e-05
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter - main params, number of params: 140546, weight_decay: 0.0, lr: 2e-05
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter - ***** Running training *****
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter -   Num examples = 3668
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter -   Num Epochs = 100
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter -   Instantaneous batch size per device = 32
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter -   Total train batch size (w. parallel, distributed & accumulation) = 32
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter -   Gradient Accumulation steps = 1
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter -   Total optimization steps = 11500
+Epoch:   0%|          | 0/100 [00:00<?, ?it/s][INFO|trainer.py:570] 2024-07-24 13:03:47,756 >> The following columns in the evaluation set  don't have a corresponding argument in `CoFiBertForSequenceClassification.forward` and have been ignored: sentence2, idx, sentence1. If sentence2, idx, sentence1 are not expected by `CoFiBertForSequenceClassification.forward`,  you can safely ignore this message.
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter - ***** Running Evaluation *****
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter -   Num examples = 408
+07/24/2024 13:03:47 - INFO - trainer.trainer_adapter -   Batch size = 32
+
+Evaluation:   0%|          | 0/13 [00:00<?, ?it/s][A
+Evaluation:   8%|▊         | 1/13 [00:00<00:01,  7.49it/s][A
+Evaluation:  23%|██▎       | 3/13 [00:00<00:01,  9.75it/s][A
+Evaluation:  38%|███▊      | 5/13 [00:00<00:00, 10.52it/s][A
+Evaluation:  54%|█████▍    | 7/13 [00:00<00:00, 10.89it/s][A
+Evaluation:  69%|██████▉   | 9/13 [00:00<00:00, 11.09it/s][A
+Evaluation:  85%|████████▍ | 11/13 [00:01<00:00, 11.26it/s][A
+Evaluation: 100%|██████████| 13/13 [00:01<00:00, 11.89it/s][AEvaluation: 100%|██████████| 13/13 [00:01<00:00, 11.16it/s]
+Removing /home/ambla/.cache/huggingface/metrics/glue/mrpc/default_experiment-1-0.arrow
+07/24/2024 13:03:50 - INFO - datasets.metric - Removing /home/ambla/.cache/huggingface/metrics/glue/mrpc/default_experiment-1-0.arrow
+[codecarbon INFO @ 13:03:58] Energy consumed for RAM : 0.000586 kWh. RAM Power : 70.27894020080566 W
+[codecarbon INFO @ 13:03:58] Energy consumed for all GPUs : 0.000357 kWh. Total GPU Power : 53.374090084840894 W
+[codecarbon INFO @ 13:03:58] Energy consumed for all CPUs : 0.000719 kWh. Total CPU Power : 60.761075059690484 W
+[codecarbon INFO @ 13:03:58] 0.001662 kWh of electricity used since the beginning.
+[codecarbon INFO @ 13:04:13] Energy consumed for RAM : 0.000878 kWh. RAM Power : 70.27894020080566 W
+[codecarbon INFO @ 13:04:13] Energy consumed for all GPUs : 0.000536 kWh. Total GPU Power : 42.92836915454243 W
+[codecarbon INFO @ 13:04:13] Energy consumed for all CPUs : 0.000949 kWh. Total CPU Power : 55.18712373636792 W
+[codecarbon INFO @ 13:04:13] 0.002364 kWh of electricity used since the beginning.
+[codecarbon INFO @ 13:04:28] Energy consumed for RAM : 0.001171 kWh. RAM Power : 70.27894020080566 W
+[codecarbon INFO @ 13:04:28] Energy consumed for all GPUs : 0.000704 kWh. Total GPU Power : 40.40922137940832 W
+[codecarbon INFO @ 13:04:28] Energy consumed for all CPUs : 0.001137 kWh. Total CPU Power : 44.98017512935513 W
+[codecarbon INFO @ 13:04:28] 0.003012 kWh of electricity used since the beginning.
+[codecarbon INFO @ 13:04:43] Energy consumed for RAM : 0.001464 kWh. RAM Power : 70.27894020080566 W
+[codecarbon INFO @ 13:04:43] Energy consumed for all GPUs : 0.000860 kWh. Total GPU Power : 37.45178703652578 W
+[codecarbon INFO @ 13:04:43] Energy consumed for all CPUs : 0.001323 kWh. Total CPU Power : 44.62855596428585 W
+[codecarbon INFO @ 13:04:43] 0.003647 kWh of electricity used since the beginning.
+[WARNING|integrations.py:827] 2024-07-24 13:04:46,049 >> Trainer is attempting to log a value of "0.6319964528083801" of type <class 'numpy.float32'> for key "eval_loss" as a metric. MLflow's log_metric() only accepts float and int types so we dropped this attribute.
+07/24/2024 13:04:47 - INFO - trainer.trainer_adapter - Evaluating: {'accuracy': 0.6838235294117647, 'f1': 0.8122270742358079, 'combined_score': 0.7480253018237863, 'eval_loss': 0.63199645, 'step': 0}
+07/24/2024 13:04:47 - INFO - trainer.trainer_adapter - Saving the best model so far: [Epoch 0 | Step: 0 | Model size: Full | Score: 0.68382]
+[INFO|configuration_utils.py:439] 2024-07-24 13:04:47,736 >> Configuration saved in output_models/bert-base-cased/A/MRPC/best/config.json
+slurmstepd: error: *** JOB 190398 ON cn3 CANCELLED AT 2024-07-24T13:04:48 ***
