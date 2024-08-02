@@ -54,6 +54,7 @@ def load_model_with_zs(model_path, model_class, zs=None):
     if os.path.exists(config_path):
         config = AutoConfig.from_pretrained(model_path)
     model = model_class.from_pretrained(model_path, config=config)
+    # print(model)
     p = os.path.join(model_path, "pytorch_model.bin")
     loaded_weights = torch.load(p, map_location="cpu")
     model.load_state_dict(loaded_weights,strict=False) # add strict=False
@@ -70,6 +71,7 @@ def load_model(model_path, model_class, zs=None):
     assert zs is not None
     model = load_model_with_zs(model_path, model_class, zs)
     print(f"Model Size: {calculate_parameters(model)}")
+    # print(model)
     return model
 
 # load the l0 module
@@ -80,7 +82,59 @@ def load_l0_module(model_path):
     else:
         return None
 
-# z values could be in [0, 1), we update the parameters accordingly with z values
+# z values could be in [0, 1], we update the parameters accordingly with z values
+# def update_params(model, zs):
+#     bert = model.bert if hasattr(model, "bert") else model.roberta
+
+#     config = model.config
+#     hidden_dims = config.hidden_size
+#     num_heads = config.num_attention_heads
+#     dims_per_head = hidden_dims // num_heads
+#     num_layers = config.num_hidden_layers
+
+#     if zs is not None:
+#         if "intermediate_z" in zs:
+#             for layer in range(num_layers):
+#                 intermediate_z = zs["intermediate_z"][layer].cpu().squeeze().clone()
+#                 bert.encoder.layer[layer].output.dense.weight.data = bert.encoder.layer[layer].output.dense.weight.data.mul(intermediate_z)
+#                 if "mlp_z" in zs:
+#                     mlp_z = zs["mlp_z"][layer].cpu()
+#                     bert.encoder.layer[layer].output.dense.weight.data = bert.encoder.layer[layer].output.dense.weight.data.transpose(0, 1).mul(mlp_z).transpose(0, 1)
+#                     bert.encoder.layer[layer].output.dense.bias.data = bert.encoder.layer[layer].output.dense.bias.data.mul(mlp_z)
+
+#         if "head_z" in zs:
+#             for layer in range(num_layers):
+#                 head_z = zs["head_z"][layer].cpu().squeeze().clone()
+#                 head_z = torch.repeat_interleave(head_z, dims_per_head)
+#                 bert.encoder.layer[layer].attention.self.value.weight.data = bert.encoder.layer[layer].attention.self.value.weight.transpose(0, 1).data.mul(head_z).transpose(0, 1)
+#                 bert.encoder.layer[layer].attention.self.value.bias.data = bert.encoder.layer[layer].attention.self.value.bias.data.mul(head_z)
+#                 if "head_layer_z" in zs:
+#                     head_layer_z = zs["head_layer_z"][layer].cpu()
+#                     bert.encoder.layer[layer].attention.output.dense.weight.data = bert.encoder.layer[
+#                         layer].attention.output.dense.weight.transpose(0, 1).data.mul(head_layer_z).transpose(0, 1)
+#                     bert.encoder.layer[layer].attention.output.dense.bias.data = bert.encoder.layer[
+#                         layer].attention.output.dense.bias.data.mul(head_layer_z)
+
+#         if "hidden_z" in zs:
+#             hidden_z = zs["hidden_z"].cpu().squeeze().clone()
+#             bert.embeddings.word_embeddings.weight.data =\
+#                 bert.embeddings.word_embeddings.weight.data.mul(hidden_z)
+#             bert.embeddings.position_embeddings.weight.data = \
+#                 bert.embeddings.position_embeddings.weight.data.mul(hidden_z)
+#             bert.embeddings.token_type_embeddings.weight.data = \
+#                 bert.embeddings.token_type_embeddings.weight.data.mul(hidden_z)
+#             for layer in range(num_layers):
+#                 bert.encoder.layer[layer].attention.self.key.weight.data = bert.encoder.layer[layer].attention.self.key.weight.data.mul(hidden_z)
+#                 bert.encoder.layer[layer].attention.self.query.weight.data = bert.encoder.layer[layer].attention.self.query.weight.data.mul(hidden_z)
+#                 bert.encoder.layer[layer].attention.self.value.weight.data = bert.encoder.layer[layer].attention.self.value.weight.data.mul(hidden_z)
+#                 bert.encoder.layer[layer].attention.output.dense.weight.data = bert.encoder.layer[layer].attention.output.dense.weight.data.transpose(0, 1).mul(hidden_z).transpose(0, 1)
+#                 bert.encoder.layer[layer].attention.output.dense.bias.data = bert.encoder.layer[layer].attention.output.dense.bias.data.mul(hidden_z)
+#                 bert.encoder.layer[layer].intermediate.dense.weight.data = bert.encoder.layer[layer].intermediate.dense.weight.data.mul(hidden_z)
+#                 bert.encoder.layer[layer].output.dense.weight.data = bert.encoder.layer[layer].output.dense.weight.data.transpose(0, 1).mul(hidden_z).transpose(0, 1)
+#             if hasattr(bert.pooler, "dense"):
+#                 bert.pooler.dense.weight.data = bert.pooler.dense.weight.data.mul(hidden_z)
+#             if hasattr(model, "qa_outputs"):
+#                 model.qa_outputs.weight.data = model.qa_outputs.weight.data.mul(hidden_z)
 def update_params(model, zs):
     bert = model.bert if hasattr(model, "bert") else model.roberta
 
@@ -94,45 +148,53 @@ def update_params(model, zs):
         if "intermediate_z" in zs:
             for layer in range(num_layers):
                 intermediate_z = zs["intermediate_z"][layer].cpu().squeeze().clone()
-                bert.encoder.layer[layer].output.dense.weight.data = bert.encoder.layer[layer].output.dense.weight.data.mul(intermediate_z)
-                if "mlp_z" in zs:
-                    mlp_z = zs["mlp_z"][layer].cpu()
-                    bert.encoder.layer[layer].output.dense.weight.data = bert.encoder.layer[layer].output.dense.weight.data.transpose(0, 1).mul(mlp_z).transpose(0, 1)
-                    bert.encoder.layer[layer].output.dense.bias.data = bert.encoder.layer[layer].output.dense.bias.data.mul(mlp_z)
+                if bert.encoder.layer[layer].output.dense is not None:
+                    bert.encoder.layer[layer].output.dense.weight.data = bert.encoder.layer[layer].output.dense.weight.data.mul(intermediate_z)
+                    if "mlp_z" in zs:
+                        mlp_z = zs["mlp_z"][layer].cpu()
+                        bert.encoder.layer[layer].output.dense.weight.data = bert.encoder.layer[layer].output.dense.weight.data.transpose(0, 1).mul(mlp_z).transpose(0, 1)
+                        bert.encoder.layer[layer].output.dense.bias.data = bert.encoder.layer[layer].output.dense.bias.data.mul(mlp_z)
 
         if "head_z" in zs:
             for layer in range(num_layers):
                 head_z = zs["head_z"][layer].cpu().squeeze().clone()
                 head_z = torch.repeat_interleave(head_z, dims_per_head)
-                bert.encoder.layer[layer].attention.self.value.weight.data = bert.encoder.layer[layer].attention.self.value.weight.transpose(0, 1).data.mul(head_z).transpose(0, 1)
-                bert.encoder.layer[layer].attention.self.value.bias.data = bert.encoder.layer[layer].attention.self.value.bias.data.mul(head_z)
-                if "head_layer_z" in zs:
-                    head_layer_z = zs["head_layer_z"][layer].cpu()
-                    bert.encoder.layer[layer].attention.output.dense.weight.data = bert.encoder.layer[
-                        layer].attention.output.dense.weight.transpose(0, 1).data.mul(head_layer_z).transpose(0, 1)
-                    bert.encoder.layer[layer].attention.output.dense.bias.data = bert.encoder.layer[
-                        layer].attention.output.dense.bias.data.mul(head_layer_z)
+                if bert.encoder.layer[layer].attention.self.value is not None:
+                    bert.encoder.layer[layer].attention.self.value.weight.data = bert.encoder.layer[layer].attention.self.value.weight.transpose(0, 1).data.mul(head_z).transpose(0, 1)
+                    bert.encoder.layer[layer].attention.self.value.bias.data = bert.encoder.layer[layer].attention.self.value.bias.data.mul(head_z)
+                    if "head_layer_z" in zs:
+                        head_layer_z = zs["head_layer_z"][layer].cpu()
+                        if bert.encoder.layer[layer].attention.output.dense is not None:
+                            bert.encoder.layer[layer].attention.output.dense.weight.data = bert.encoder.layer[layer].attention.output.dense.weight.transpose(0, 1).data.mul(head_layer_z).transpose(0, 1)
+                            bert.encoder.layer[layer].attention.output.dense.bias.data = bert.encoder.layer[layer].attention.output.dense.bias.data.mul(head_layer_z)
 
         if "hidden_z" in zs:
             hidden_z = zs["hidden_z"].cpu().squeeze().clone()
-            bert.embeddings.word_embeddings.weight.data =\
-                bert.embeddings.word_embeddings.weight.data.mul(hidden_z)
-            bert.embeddings.position_embeddings.weight.data = \
-                bert.embeddings.position_embeddings.weight.data.mul(hidden_z)
-            bert.embeddings.token_type_embeddings.weight.data = \
-                bert.embeddings.token_type_embeddings.weight.data.mul(hidden_z)
+            if bert.embeddings.word_embeddings is not None:
+                bert.embeddings.word_embeddings.weight.data = bert.embeddings.word_embeddings.weight.data.mul(hidden_z)
+            if bert.embeddings.position_embeddings is not None:
+                bert.embeddings.position_embeddings.weight.data = bert.embeddings.position_embeddings.weight.data.mul(hidden_z)
+            if bert.embeddings.token_type_embeddings is not None:
+                bert.embeddings.token_type_embeddings.weight.data = bert.embeddings.token_type_embeddings.weight.data.mul(hidden_z)
             for layer in range(num_layers):
-                bert.encoder.layer[layer].attention.self.key.weight.data = bert.encoder.layer[layer].attention.self.key.weight.data.mul(hidden_z)
-                bert.encoder.layer[layer].attention.self.query.weight.data = bert.encoder.layer[layer].attention.self.query.weight.data.mul(hidden_z)
-                bert.encoder.layer[layer].attention.self.value.weight.data = bert.encoder.layer[layer].attention.self.value.weight.data.mul(hidden_z)
-                bert.encoder.layer[layer].attention.output.dense.weight.data = bert.encoder.layer[layer].attention.output.dense.weight.data.transpose(0, 1).mul(hidden_z).transpose(0, 1)
-                bert.encoder.layer[layer].attention.output.dense.bias.data = bert.encoder.layer[layer].attention.output.dense.bias.data.mul(hidden_z)
-                bert.encoder.layer[layer].intermediate.dense.weight.data = bert.encoder.layer[layer].intermediate.dense.weight.data.mul(hidden_z)
-                bert.encoder.layer[layer].output.dense.weight.data = bert.encoder.layer[layer].output.dense.weight.data.transpose(0, 1).mul(hidden_z).transpose(0, 1)
+                if bert.encoder.layer[layer].attention.self.key is not None:
+                    bert.encoder.layer[layer].attention.self.key.weight.data = bert.encoder.layer[layer].attention.self.key.weight.data.mul(hidden_z)
+                if bert.encoder.layer[layer].attention.self.query is not None:
+                    bert.encoder.layer[layer].attention.self.query.weight.data = bert.encoder.layer[layer].attention.self.query.weight.data.mul(hidden_z)
+                if bert.encoder.layer[layer].attention.self.value is not None:
+                    bert.encoder.layer[layer].attention.self.value.weight.data = bert.encoder.layer[layer].attention.self.value.weight.data.mul(hidden_z)
+                if bert.encoder.layer[layer].attention.output.dense is not None:
+                    bert.encoder.layer[layer].attention.output.dense.weight.data = bert.encoder.layer[layer].attention.output.dense.weight.data.transpose(0, 1).mul(hidden_z).transpose(0, 1)
+                    bert.encoder.layer[layer].attention.output.dense.bias.data = bert.encoder.layer[layer].attention.output.dense.bias.data.mul(hidden_z)
+                if bert.encoder.layer[layer].intermediate.dense is not None:
+                    bert.encoder.layer[layer].intermediate.dense.weight.data = bert.encoder.layer[layer].intermediate.dense.weight.data.mul(hidden_z)
+                if bert.encoder.layer[layer].output.dense is not None:
+                    bert.encoder.layer[layer].output.dense.weight.data = bert.encoder.layer[layer].output.dense.weight.data.transpose(0, 1).mul(hidden_z).transpose(0, 1)
             if hasattr(bert.pooler, "dense"):
                 bert.pooler.dense.weight.data = bert.pooler.dense.weight.data.mul(hidden_z)
             if hasattr(model, "qa_outputs"):
                 model.qa_outputs.weight.data = model.qa_outputs.weight.data.mul(hidden_z)
+
 
 # zs : pretrained_pruned_model if existing
 def prune_model_with_z(zs, model):
@@ -248,8 +310,18 @@ def prune_model_with_z(zs, model):
                 bert.encoder.layer[layer].intermediate.dense = None
                 bert.encoder.layer[layer].output.dense = None
             else:
-                bert.encoder.layer[layer].intermediate.dense = prune_linear_layer(bert.encoder.layer[layer].intermediate.dense, index=torch.LongTensor(keep_dims[layer]).to(device), dim=0)
-                bert.encoder.layer[layer].output.dense = prune_linear_layer(bert.encoder.layer[layer].output.dense, index=torch.LongTensor(keep_dims[layer]).to(device), dim=1)
+                if bert.encoder.layer[layer].intermediate.dense is not None:
+                    bert.encoder.layer[layer].intermediate.dense = prune_linear_layer(
+                        bert.encoder.layer[layer].intermediate.dense, 
+                        index=torch.LongTensor(keep_dims[layer]).to(device), 
+                        dim=0
+                    )
+                if bert.encoder.layer[layer].output.dense is not None:
+                    bert.encoder.layer[layer].output.dense = prune_linear_layer(
+                        bert.encoder.layer[layer].output.dense, 
+                        index=torch.LongTensor(keep_dims[layer]).to(device), 
+                        dim=1
+                    )
 
     if kept_intermediate_dims is not None:
         prune_intermediate_layers(model, kept_intermediate_dims)

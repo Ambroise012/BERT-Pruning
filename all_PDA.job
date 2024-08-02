@@ -2,9 +2,9 @@
 
 #SBATCH --job-name=instal        # Job name
 #SBATCH --output=job.%j.out      # Name of output file (%j expands to jobId)
-#SBATCH --cpus-per-task=24        # Schedule one core
+#SBATCH --cpus-per-task=8        # Schedule one core
 #SBATCH --gres=gpu:1             # Schedule a GPU
-#SBATCH --time=7-00:00:00        #time
+#SBATCH --time=3-00:00:00        #time
 #SBATCH --partition=red          #red, brown
 #SBATCH --mail-type=END          # Send an email when the job finishes
 
@@ -43,7 +43,7 @@ scheduler_type=linear
 
 pretrained_pruned_model=None
 
-TASK=(MRPC RTE STSB CoLA MNLI QQP QNLI SST2)
+TASK=(QQP)
 for task in "${TASK[@]}"; do
     # task and data
     task_name=${task}
@@ -62,7 +62,7 @@ for task in "${TASK[@]}"; do
         lagrangian_warmup_epochs=2
     fi
 
-    SPARSITY=(0.1 0.4 0.6 0.7 0.8 0.9 0.95)
+    SPARSITY=(0.6 0.8 0.9 0.95)
     for target_sparsity in "${SPARSITY[@]}"; do
         ex_name=${target_sparsity}
         ex_cate=PDA

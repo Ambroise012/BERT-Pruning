@@ -119,16 +119,14 @@ def evaluate(model):
         if i > 0:
             total_infer_times += total_infer_time    
     
-    
+    metrics = compute_metrics(EvalPrediction(predictions=final_preds, label_ids=final_label_ids))
 
     total_infer_time = round(total_infer_times / (t-1), 4)
     metrics["speedup"] = total_infer_times / (t-1) / total_examples
 
     emissions=emissions*10.0**(6.0)
     metrics["emissions"] = emissions
-
-    metrics = compute_metrics(EvalPrediction(predictions=final_preds, label_ids=final_label_ids))
-
+    
     return metrics
 
 

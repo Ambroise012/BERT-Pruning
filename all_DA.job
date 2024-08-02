@@ -2,9 +2,9 @@
 
 #SBATCH --job-name=instal        # Job name
 #SBATCH --output=job.%j.out      # Name of output file (%j expands to jobId)
-#SBATCH --cpus-per-task=24        # Schedule one core
+#SBATCH --cpus-per-task=8        # Schedule one core
 #SBATCH --gres=gpu:1             # Schedule a GPU
-#SBATCH --time=5-00:00:00        #time
+#SBATCH --time=3-00:00:00        #time
 #SBATCH --partition=red          #red, brown
 #SBATCH --mail-type=END          # Send an email when the job finishes
 
@@ -43,26 +43,26 @@ scheduler_type=linear
 
 pretrained_pruned_model=None
 
-TASK=(MRPC RTE STSB CoLA MNLI QQP QNLI SST2)
+TASK=(QQP)
 for task in "${TASK[@]}"; do
     # task and data
     task_name=${task}
     if [[ " ${glue_low[*]} " =~ ${task_name} ]]; then
-        eval_steps=50
-        epochs=100
+        eval_steps=150
+        epochs=300
         start_saving_best_epochs=50
         #prepruning_finetune_epochs=4
-        lagrangian_warmup_epochs=20
+        lagrangian_warmup_epochs=30
     fi
 
     if [[ " ${glue_high[*]} " =~ ${task_name} ]]; then
-        epochs=20
-        eval_steps=500
+        epochs=30
+        eval_steps=1500
         #prepruning_finetune_epochs=1
-        lagrangian_warmup_epochs=2
+        lagrangian_warmup_epochs=4
     fi
 
-    ex_cate=DA
+    ex_cate=DA/2
     output_dir=output_models/bert-base-cased/${ex_cate}/${task_name}
     mkdir -p ${output_dir}
     (python3 run_adapter.py \

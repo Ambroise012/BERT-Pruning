@@ -12,7 +12,6 @@ glue_low=(MRPC RTE STSB CoLA)
 glue_high=(MNLI QQP QNLI SST2)
 
 
-
 # pretrain model
 model_name_or_path=google-bert/bert-base-cased
 
@@ -36,15 +35,13 @@ sparsity_epsilon=0.01
 
 scheduler_type=linear
 
-pretrained_pruned_model=None
-
-TASK=(MRPC RTE STSB CoLA MNLI QQP QNLI SST2)
+TASK=(MRPC RTE STSB CoLA)
 for task in "${TASK[@]}"; do
     # task and data
     task_name=${task}
     if [[ " ${glue_low[*]} " =~ ${task_name} ]]; then
-        eval_steps=50
-        epochs=100
+        eval_steps=150
+        epochs=350
         start_saving_best_epochs=50
         #prepruning_finetune_epochs=4
         lagrangian_warmup_epochs=20
@@ -61,7 +58,8 @@ for task in "${TASK[@]}"; do
     for target_sparsity in "${SPARSITY[@]}"; do
         ex_name=${target_sparsity}
         ex_cate=P
-        output_dir=output_models/bert-base-cased/${ex_cate}/${task_name}/${ex_name}
+        pretrained_pruned_model=None
+        output_dir=output_models/bert-base-cased/${ex_cate}/ft/${task_name}/${ex_name}
         mkdir -p ${output_dir}
         (python3 run_glue_prune.py \
             --output_dir ${output_dir} \
