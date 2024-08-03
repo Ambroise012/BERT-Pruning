@@ -8,9 +8,9 @@
 #SBATCH --partition=red,brown    
 #SBATCH --mail-type=END          # Send an email when the job finishes
 
-SPARSITY=(0.1 0.4 0.6 0.7 0.8 0.9 0.95)
+SPARSITY=(0.9 0.95)
 for sparsity in "${SPARSITY[@]}"; do
-    python3 evaluation.py sst2 "output_models/bert-base-cased/PA/SST2/${sparsity}"
+    python3 evaluation.py sst2 "output_models/bert-base-cased/PA/SST2/${sparsity}/best"
 done
 # no_best=("MNLI" "STSB")
 # best=("MRPC" "RTE" "CoLA" "QQP" "QNLI" "SST2")

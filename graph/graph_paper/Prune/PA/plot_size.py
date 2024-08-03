@@ -5,7 +5,7 @@ sparity = (0.1, 0.4, 0.6, 0.7, 0.8, 0.9, 0.95)
 
 size = {
     'QQP':(),
-    'SST2':(77069251,52424818,32304631,25334745,17336240,"""0.9, 0.95"""),
+    'SST2':(77069251,52424818,32304631,25334745,17336240,7736329,3706722),
     'QNLI':(),
     # 'MNLI':(),
     'MRPC':(76137194,49633995,32627579,25615665,15797688,6586497,3564516),
@@ -25,8 +25,8 @@ for attribute, measurement in size.items():
     multiplier += 1
 # ax.set_ylim(bottom=0, top=0.03)
 
-ax.set_ylabel('Accuracy')
-ax.set_title('Accuracy - FT, A, DA')
+ax.set_ylabel('size (Mb)')
+ax.set_title('Model size - PA')
 ax.set_xticks(x + width * len(size) / 2, sparity)
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 

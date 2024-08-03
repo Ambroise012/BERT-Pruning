@@ -5,7 +5,7 @@ sparity = (0.1, 0.4, 0.6, 0.7, 0.8, 0.9, 0.95)
 
 accuracy = {
     'QQP':(),
-    'SST2':(90.59,89.44,88.53,88.76,87.84,"""0.9, 0.95"""),
+    'SST2':(90.59,89.44,88.53,88.76,87.84,87.95871559633027,84.40366972477065),
     'QNLI':(),
     # 'MNLI':(),
     'MRPC':(85.04901960784313,84.31372549019608,80.63725490196079,79.16666666666666,78.43137254901961,69.6078431372549,74.01960784313726),#accuracy
@@ -26,7 +26,7 @@ for attribute, measurement in accuracy.items():
 # ax.set_ylim(bottom=0, top=0.03)
 
 ax.set_ylabel('Accuracy')
-ax.set_title('Accuracy - FT, A, DA')
+ax.set_title('Efficiency - PA')
 ax.set_xticks(x + width * len(accuracy) / 2, sparity)
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
