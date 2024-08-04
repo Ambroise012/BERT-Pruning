@@ -8,8 +8,8 @@
 #SBATCH --partition=red,brown    
 #SBATCH --mail-type=END          # Send an email when the job finishes
 
-python3 evaluation.py sst2 output_models/bert-base-cased/DA/2/SST2/best
-python3 evaluation.py sst2 output_models/bert-base-cased/DA/2/SST2
+python3 evaluation.py qnli output_models/bert-base-cased/DA/2/QNLI/best
+python3 evaluation.py qnli output_models/bert-base-cased/DA/2/QNLI
 
 # no_best=("MNLI" "STSB")
 # best=("MRPC" "RTE" "CoLA" "QQP" "QNLI" "SST2")

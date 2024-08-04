@@ -7,10 +7,11 @@
 #SBATCH --time=02:00:00        
 #SBATCH --partition=red,brown    
 #SBATCH --mail-type=END          # Send an email when the job finishes
+#qqp et qnli
 
-SPARSITY=(0.9 0.95)
+SPARSITY=(0.1 0.4 0.6 0.8 0.95)
 for sparsity in "${SPARSITY[@]}"; do
-    python3 evaluation.py sst2 "output_models/bert-base-cased/PA/SST2/${sparsity}/best"
+    python3 evaluation.py qnli "output_models/bert-base-cased/PA/QNLI/${sparsity}/best"
 done
 # no_best=("MNLI" "STSB")
 # best=("MRPC" "RTE" "CoLA" "QQP" "QNLI" "SST2")
