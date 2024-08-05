@@ -10,7 +10,7 @@
 
 SPARSITY=(0.1 0.4 0.6 0.7 0.8 0.9 0.95)
 
-TASK=("STSB" "SST2" "QQP" "QNLI")
+TASK=("CoLA" "QQP")
 for task_name in "${TASK[@]}"; do
     for sparsity_target in "${SPARSITY[@]}"; do
         python3 evaluation.py "$task_name" "output_models/bert-base-cased/PDA/$task_name/${sparsity_target}"

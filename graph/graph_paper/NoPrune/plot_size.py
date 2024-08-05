@@ -25,7 +25,7 @@ for attribute, measurement in accuracy.items():
     multiplier += 1
 # ax.set_ylim(bottom=0, top=0.03)
 
-ax.set_ylabel('Size (bites)')
+ax.set_ylabel('Size (params)')
 ax.set_title('Model size - FT, A, DA')
 ax.set_xticks(x + width * len(accuracy) / 2, sparity)
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))

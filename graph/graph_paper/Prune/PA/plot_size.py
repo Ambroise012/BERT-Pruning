@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-sparity = (0.1, 0.4, 0.6, 0.7, 0.8, 0.9, 0.95)
+sparity = (0.1, 0.6, 0.7, 0.8, 0.9, 0.95)
 
 size = {
     'QQP':(76426035,52424818,33511554,17336240,7736329,3564516),
@@ -25,10 +25,10 @@ for attribute, measurement in size.items():
     multiplier += 1
 # ax.set_ylim(bottom=0, top=0.03)
 
-ax.set_ylabel('size (Mb)')
-ax.set_title('Model size - PA')
+ax.set_ylabel('Size (params)')
+ax.set_title('Model size - P + A')
 ax.set_xticks(x + width * len(size) / 2, sparity)
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
-plt.savefig('../../../../images/paper/no_prune/PA/graph_size.png', bbox_inches='tight')
+plt.savefig('../../../../images/paper/prune/PA/graph_size.png', bbox_inches='tight')
 plt.show()

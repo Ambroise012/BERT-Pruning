@@ -30,5 +30,5 @@ ax.set_title('Efficiency - P + A')
 ax.set_xticks(x + width * len(accuracy) / 2, sparity)
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
-plt.savefig('../../../../images/paper/no_prune/graph_accuracy.png', bbox_inches='tight')
+plt.savefig('../../../../images/paper/prune/PA/graph_accuracy.png', bbox_inches='tight')
 plt.show()

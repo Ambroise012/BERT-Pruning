@@ -25,10 +25,10 @@ for attribute, measurement in accuracy.items():
     multiplier += 1
 # ax.set_ylim(bottom=0, top=0.03)
 
-ax.set_ylabel('Speedup (ms)')
-ax.set_title('Accuracy - FT, A, DA')
+ax.set_ylabel('Time (ms)')
+ax.set_title('Speedup - P + A')
 ax.set_xticks(x + width * len(accuracy) / 2, sparity)
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
-plt.savefig('../../../../images/paper/no_prune/graph_speedup.png', bbox_inches='tight')
+plt.savefig('../../../../images/paper/prune/PA/graph_speedup.png', bbox_inches='tight')
 plt.show()

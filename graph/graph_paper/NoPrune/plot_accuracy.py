@@ -25,8 +25,8 @@ for attribute, measurement in accuracy.items():
     multiplier += 1
 # ax.set_ylim(bottom=0, top=0.03)
 
-ax.set_ylabel('Accuracy')
-ax.set_title('Accuracy - FT, A, DA')
+ax.set_ylabel('Performance metrics')
+ax.set_title('Efficiency - FT, A, DA')
 ax.set_xticks(x + width * len(accuracy) / 2, sparity)
 ax.legend(loc='center left', bbox_to_anchor=(1, 0.5))
 
